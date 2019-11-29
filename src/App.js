@@ -1,26 +1,94 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import sudoku from 'sudoku-umd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Board from './components/Board/Board';
+
+import './App.scss';
+import { Button, Container } from 'reactstrap';
+
+class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+		const board = sudoku.generate();
+
+		this.state = {
+			initialBoard: board,
+			board: board.slice(),
+			readOnly: false
+		}
+
+		if(board !== '.' && this.state.initialBoard !== '.') {
+			this.setState({
+				readOnly: true
+			})   
+		}
+
+		this.newGame = this.newGame.bind(this);
+		this.restart = this.restart.bind(this);
+		this.showSolution = this.showSolution.bind(this);
+		this.solveGame = this.solveGame.bind(this);
+	}
+
+	newGame() {
+		const board = sudoku.generate();
+
+		this.setState({
+			initialBoard: board,
+			board: board.slice()
+		})
+	}
+
+	restart() {
+		this.setState({
+			board: this.state.initialBoard
+		});
+	}
+
+	showSolution() {
+		const solution = sudoku.solve(this.state.initialBoard);
+		if (solution) {
+			this.setState({
+				board: solution
+			});
+		}
+	}
+
+	solveGame() {
+		const solution = sudoku.solve(this.state.initialBoard);
+		const playerSolution = this.state.board;
+
+		if(solution === playerSolution) {
+			alert ('Congratulations! You solved it!');
+			
+		} else {
+			alert ('Your solution is not correct. Try again!');
+		}
+	}
+
+	onChange(i, value) {
+		value = value > 9 ? value[1] : value;
+		console.log(i, value);
+		const updatedBoard = this.state.board.slice(0, i) + (value.length > 0 ? value : '.') + this.state.board.slice(i + 1);
+		this.setState({
+			board: updatedBoard
+		})
+	}
+
+	render() {
+		return (
+			<Container className='App'>
+				<h1>Sudoku</h1>
+				<Board className='board' board={this.state.board} initialBoard={this.state.initialBoard} onChange={this.onChange.bind(this)} />
+				<div className='buttons'>
+					<Button color='secondary' onClick={this.showSolution}>Check</Button>
+					<Button color='secondary' onClick={this.restart}>Restart</Button>
+					<Button color='primary' onClick={this.solveGame}>Solve</Button>
+					<Button color='primary' onClick={this.newGame}>New game</Button>
+				</div>
+			</Container>
+		);
+	}
 }
 
 export default App;

@@ -1,0 +1,16 @@
+@import '../../styles/settings.scss';
+
+.tile {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-grow: 0;
+    width: $base-size * 4 !important;
+    
+    input {
+        display: flex;
+        text-align: center;
+        height: $base-size * 4;
+        width: $base-size * 4 !important;
+    }
+}
+

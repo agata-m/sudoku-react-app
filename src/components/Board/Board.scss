@@ -1,0 +1,11 @@
+@import '../../styles/settings.scss';
+
+.board-matrix {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: $base-size * 3 auto;
+    flex-grow: 0;
+    max-width: $base-size * 36;
+    padding: 0 !important;
+}
