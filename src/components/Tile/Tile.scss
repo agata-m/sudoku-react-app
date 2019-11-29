@@ -11,6 +11,19 @@
         text-align: center;
         height: $base-size * 4;
         width: $base-size * 4 !important;
+        border: 1px solid $color-text-lightest;
+    }
+
+    .readOnly {
+        cursor: default;
+        background-color: lighten($color-text-light, 50%);
+    }
+
+    .bottomLine {
+        border-bottom: 0.1rem solid $color-text;
+    }
+
+    .rightLine {
+        border-right: 0.1rem solid $color-text;
     }
 }
-

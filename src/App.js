@@ -14,14 +14,7 @@ class App extends React.Component {
 
 		this.state = {
 			initialBoard: board,
-			board: board.slice(),
-			readOnly: false
-		}
-
-		if(board !== '.' && this.state.initialBoard !== '.') {
-			this.setState({
-				readOnly: true
-			})   
+			board: board.slice()
 		}
 
 		this.newGame = this.newGame.bind(this);
